@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import getIcon from '../utils/iconUtils';
@@ -31,6 +31,11 @@ function MainFeature({ activeTab }) {
   const [transactionId, setTransactionId] = useState('');
 
   // States for QR code
+  const transferAmountRef = useRef(null);
+  const qrAmountRef = useRef(null);
+  const billAmountRef = useRef(null);
+  const rechargeAmountRef = useRef(null);
+  
   const [qrValue, setQrValue] = useState('');
   const [qrAmount, setQrAmount] = useState('');
   const [qrGenerated, setQrGenerated] = useState(false);
@@ -67,6 +72,41 @@ function MainFeature({ activeTab }) {
     setRechargeAmount('');
     setShowReceipt(false);
   }, [activeTab]);
+
+  // Effect to maintain focus on transfer amount input
+  useEffect(() => {
+    if (activeTab === 'transfer' && transferAmountRef.current && !showReceipt && !isProcessing) {
+      const input = transferAmountRef.current;
+      // Use timeout to ensure DOM is ready
+      setTimeout(() => {
+        input.focus();
+      }, 0);
+    }
+  }, [amount, activeTab, showReceipt, isProcessing]);
+  
+  // Effect to maintain focus on QR amount input
+  useEffect(() => {
+    if (activeTab === 'qrcode' && qrAmountRef.current && !qrGenerated) {
+      const input = qrAmountRef.current;
+      setTimeout(() => input.focus(), 0);
+    }
+  }, [qrAmount, activeTab, qrGenerated]);
+  
+  // Effect to maintain focus on bill amount input
+  useEffect(() => {
+    if (activeTab === 'bills' && billAmountRef.current && !showReceipt && !isProcessing) {
+      const input = billAmountRef.current;
+      setTimeout(() => input.focus(), 0);
+    }
+  }, [billAmount, activeTab, showReceipt, isProcessing]);
+  
+  // Effect to maintain focus on recharge amount input
+  useEffect(() => {
+    if (activeTab === 'recharge' && rechargeAmountRef.current && !showReceipt && !isProcessing) {
+      const input = rechargeAmountRef.current;
+      setTimeout(() => input.focus(), 0);
+    }
+  }, [rechargeAmount, activeTab, showReceipt, isProcessing]);
 
   // Handle money transfer submission
   const handleTransferSubmit = (e) => {
@@ -293,11 +333,10 @@ function MainFeature({ activeTab }) {
               <CircleDollarSignIcon size={18} className="text-surface-400 dark:text-surface-500" />
             </div>
             <input
-              key="transfer-amount-input"
               type="text"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="Enter amount"
+              ref={transferAmountRef}
               className="input-field pl-10"
               required
             />
@@ -440,11 +479,10 @@ function MainFeature({ activeTab }) {
                 <CircleDollarSignIcon size={18} className="text-surface-400 dark:text-surface-500" />
               </div>
               <input
-                key="qr-amount-input"
                 type="text"
                 value={qrAmount}
                 onChange={(e) => setQrAmount(e.target.value)}
-                placeholder="Enter amount"
+                ref={qrAmountRef}
                 className="input-field pl-10"
                 required
               />
@@ -569,11 +607,10 @@ function MainFeature({ activeTab }) {
               <CircleDollarSignIcon size={18} className="text-surface-400 dark:text-surface-500" />
             </div>
             <input
-              key="bill-amount-input"
               type="text"
               value={billAmount}
               onChange={(e) => setBillAmount(e.target.value)}
-              placeholder="Enter amount"
+              ref={billAmountRef}
               className="input-field pl-10"
               required
             />
@@ -682,11 +719,10 @@ function MainFeature({ activeTab }) {
               <CircleDollarSignIcon size={18} className="text-surface-400 dark:text-surface-500" />
             </div>
             <input
-              key="recharge-amount-input"
               type="text"
               value={rechargeAmount}
               onChange={(e) => setRechargeAmount(e.target.value)}
-              placeholder="Enter amount"
+              ref={rechargeAmountRef}
               className="input-field pl-10"
               required
             />
