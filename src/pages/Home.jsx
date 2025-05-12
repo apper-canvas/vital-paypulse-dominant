@@ -78,7 +78,6 @@ function Home() {
               whileTap={{ scale: 0.95 }}
               onClick={() => {
                 setActiveTab(key);
-                toast.info(`${title} feature selected`);
               }}
               className={`relative p-3 md:p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all ${
                 activeTab === key 
