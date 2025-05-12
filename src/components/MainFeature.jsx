@@ -293,6 +293,7 @@ function MainFeature({ activeTab }) {
               <CircleDollarSignIcon size={18} className="text-surface-400 dark:text-surface-500" />
             </div>
             <input
+              key="transfer-amount-input"
               type="text"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
@@ -439,6 +440,7 @@ function MainFeature({ activeTab }) {
                 <CircleDollarSignIcon size={18} className="text-surface-400 dark:text-surface-500" />
               </div>
               <input
+                key="qr-amount-input"
                 type="text"
                 value={qrAmount}
                 onChange={(e) => setQrAmount(e.target.value)}
@@ -567,6 +569,7 @@ function MainFeature({ activeTab }) {
               <CircleDollarSignIcon size={18} className="text-surface-400 dark:text-surface-500" />
             </div>
             <input
+              key="bill-amount-input"
               type="text"
               value={billAmount}
               onChange={(e) => setBillAmount(e.target.value)}
@@ -679,6 +682,7 @@ function MainFeature({ activeTab }) {
               <CircleDollarSignIcon size={18} className="text-surface-400 dark:text-surface-500" />
             </div>
             <input
+              key="recharge-amount-input"
               type="text"
               value={rechargeAmount}
               onChange={(e) => setRechargeAmount(e.target.value)}
